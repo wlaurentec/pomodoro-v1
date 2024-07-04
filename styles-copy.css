@@ -14,12 +14,11 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
   background-color: var(--color-primary);
   font-size: 1.6rem;
-  font-family: "Open sans", sans-serif;
+  font-family: 'Open sans', sans-serif;
 }
 
 p,
@@ -62,12 +61,12 @@ section {
   margin-block: 5rem;
   padding: 1rem;
   border-radius: 10rem;
-  -webkit-box-shadow: 0px 0px 15px 10px var(--color-shadow);
+  -webkit-box-shadow: 0px 0px 15px 10px var(--color-shadow); 
   box-shadow: 0px 0px 15px 10px var(--color-shadow);
 }
 
 .painel p {
-  opacity: 0.8;
+  opacity: .8;
   transition: 1s ease-in;
 }
 
@@ -99,7 +98,7 @@ section {
 }
 
 .circle::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 95%;
   height: 95%;
