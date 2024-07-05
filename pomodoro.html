@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador Pomodoro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #temporizador {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+        }
+        #estado {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="temporizador">25:00</div>
+        <div id="estado">Trabajo</div>
+        <button id="iniciar">Iniciar</button>
+        <button id="pausar">Pausar</button>
+        <button id="reiniciar">Reiniciar</button>
+    </div>
+
+    <script>
+        let temporizador;
+        let tiempoRestante = 25 * 60; // 25 minutos en segundos
+        let esTrabajo = true;
+        let ciclos = 0;
+        const display = document.getElementById('temporizador');
+        const estado = document.getElementById('estado');
+        const iniciarBtn = document.getElementById('iniciar');
+        const pausarBtn = document.getElementById('pausar');
+        const reiniciarBtn = document.getElementById('reiniciar');
+
+        function actualizarTiempo() {
+            if (tiempoRestante <= 0) {
+                clearInterval(temporizador);
+                if (esTrabajo) {
+                    ciclos++;
+                    if (ciclos % 4 === 0) {
+                        tiempoRestante = 15 * 60; // Descanso largo de 15 minutos
+                        estado.textContent = "Descanso Largo";
+                    } else {
+                        tiempoRestante = 5 * 60; // Descanso corto de 5 minutos
+                        estado.textContent = "Descanso Corto";
+                    }
+                    esTrabajo = false;
+                } else {
+                    tiempoRestante = 25 * 60; // Período de trabajo de 25 minutos
+                    estado.textContent = "Trabajo";
+                    esTrabajo = true;
+                }
+                temporizador = setInterval(actualizarTiempo, 1000);
+            }
+
+            let minutos = Math.floor(tiempoRestante / 60);
+            let segundos = tiempoRestante % 60;
+
+            display.textContent = 
+                (minutos < 10 ? '0' + minutos : minutos) + ':' +
+                (segundos < 10 ? '0' + segundos : segundos);
+
+            tiempoRestante--;
+        }
+
+        iniciarBtn.addEventListener('click', function() {
+            clearInterval(temporizador);
+            temporizador = setInterval(actualizarTiempo, 1000);
+        });
+
+        pausarBtn.addEventListener('click', function() {
+            clearInterval(temporizador);
+        });
+
+        reiniciarBtn.addEventListener('click', function() {
+            clearInterval(temporizador);
+            tiempoRestante = 25 * 60;
+            esTrabajo = true;
+            ciclos = 0;
+            estado.textContent = "Trabajo";
+            display.textContent = '25:00';
+        });
+    </script>
+</body>
+</html>

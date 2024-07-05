@@ -3,7 +3,7 @@
 let workTitle = document.getElementById("work");
 let breakTitle = document.getElementById("break");
 
-let workTime = 1;
+let workTime = 25;
 let breakTime = 5;
 
 let seconds = "00";
@@ -28,10 +28,10 @@ function start() {
   let workMinutes = workTime -1;
   let breakMinutes = breakTime -1;
 
-  breakCount = 0;
+  let breakCount = 0;
 
   // countdown
-  let timerFuncion = () => {
+  const timerFuncion = () => {
     // change the display
     document.getElementById("minutes").innerHTML = workMinutes;
     document.getElementById("seconds").innerHTML = seconds;
@@ -60,9 +60,6 @@ function start() {
           workTitle.classList.add("active");
         }
       }
-
-
-
       seconds = 59;
     }
   };

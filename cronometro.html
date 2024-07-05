@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #cronometro {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+        }
+        button, input {
+            font-size: 18px;
+            margin: 10px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="cronometro">00:00</div>
+        <input type="number" id="minutos" placeholder="Minutos" min="0" max="59">
+        <input type="number" id="segundos" placeholder="Segundos" min="0" max="59">
+        <button id="iniciar">Iniciar</button>
+        <button id="pausar">Pausar</button>
+        <button id="reiniciar">Reiniciar</button>
+    </div>
+
+    <script>
+        let cronometro;
+        let tiempoRestante = 0;
+        const display = document.getElementById('cronometro');
+        const minutosInput = document.getElementById('minutos');
+        const segundosInput = document.getElementById('segundos');
+        const iniciarBtn = document.getElementById('iniciar');
+        const pausarBtn = document.getElementById('pausar');
+        const reiniciarBtn = document.getElementById('reiniciar');
+
+        function actualizarTiempo() {
+            if (tiempoRestante <= 0) {
+                clearInterval(cronometro);
+                display.textContent = "¡Tiempo!";
+                return;
+            }
+
+            tiempoRestante--;
+            let minutos = Math.floor(tiempoRestante / 60);
+            let segundos = tiempoRestante % 60;
+
+            display.textContent = 
+                (minutos < 10 ? '0' + minutos : minutos) + ':' +
+                (segundos < 10 ? '0' + segundos : segundos);
+        }
+
+        iniciarBtn.addEventListener('click', function() {
+            clearInterval(cronometro);
+            tiempoRestante = parseInt(minutosInput.value) * 60 + parseInt(segundosInput.value);
+            if (tiempoRestante > 0) {
+                cronometro = setInterval(actualizarTiempo, 1000);
+            }
+        });
+
+        pausarBtn.addEventListener('click', function() {
+            clearInterval(cronometro);
+        });
+
+        reiniciarBtn.addEventListener('click', function() {
+            clearInterval(cronometro);
+            tiempoRestante = 0;
+            display.textContent = '00:00';
+            minutosInput.value = '';
+            segundosInput.value = '';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro Digital</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff;
+        }
+        #cronometro {
+            font-size: 48px;
+            font-weight: bold;
+            color:  #222020;
+        }
+        button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #fff;
+            color: #222020;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="cronometro">00:00:00</div>
+        <button id="iniciar">Iniciar</button>
+        <button id="pausar">Pausar</button>
+        <button id="reiniciar">Reiniciar</button>
+    </div>
+
+    <script>
+        let cronometro;
+        let tiempo = 0;
+        const display = document.getElementById('cronometro');
+        const iniciarBtn = document.getElementById('iniciar');
+        const pausarBtn = document.getElementById('pausar');
+        const reiniciarBtn = document.getElementById('reiniciar');
+
+        function actualizarTiempo() {
+            tiempo++;
+            let horas = Math.floor(tiempo / 3600);
+            let minutos = Math.floor((tiempo % 3600) / 60);
+            let segundos = tiempo % 60;
+
+            display.textContent = 
+                (horas < 10 ? '0' + horas : horas) + ':' +
+                (minutos < 10 ? '0' + minutos : minutos) + ':' +
+                (segundos < 10 ? '0' + segundos : segundos);
+        }
+
+        iniciarBtn.addEventListener('click', function() {
+            clearInterval(cronometro);
+            cronometro = setInterval(actualizarTiempo, 1000);
+        });
+
+        pausarBtn.addEventListener('click', function() {
+            clearInterval(cronometro);
+        });
+
+        reiniciarBtn.addEventListener('click', function() {
+            clearInterval(cronometro);
+            tiempo = 0;
+            display.textContent = '00:00:00';
+        });
+    </script>
+</body>
+</html>
